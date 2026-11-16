@@ -30,7 +30,6 @@ use core_files\conversion;
  * @covers     \fileconverter_oxidocs\converter
  */
 final class converter_test extends \advanced_testcase {
-
     /**
      * Point the plugin at oxidocs, or skip.
      */

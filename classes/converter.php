@@ -41,7 +41,6 @@ use core_files\conversion;
  * converter.
  */
 class converter implements \core_files\converter_interface {
-
     /** The path is set and runs. */
     const PATH_OK = 'ok';
     /** The path is not set. */
@@ -132,8 +131,8 @@ class converter implements \core_files\converter_interface {
         }
         if ($status !== 0 || !is_file($target) || filesize($target) === 0) {
             $conversion->set('status', conversion::STATUS_FAILED);
-            error_log("oxidocs: converting file {$file->get_id()} ({$from}) failed with status {$status}: " .
-                \core_text::substr(trim($stderr), 0, 500));
+            debugging("oxidocs: converting file {$file->get_id()} ({$from}) failed with status {$status}: " .
+                \core_text::substr(trim($stderr), 0, 500), DEBUG_NORMAL);
             return $this;
         }
 
@@ -207,8 +206,14 @@ class converter implements \core_files\converter_interface {
             'filename' => 'oxidocs_test.docx',
         ];
         $fs = get_file_storage();
-        $docx = $fs->get_file($record['contextid'], $record['component'], $record['filearea'],
-            $record['itemid'], $record['filepath'], $record['filename']);
+        $docx = $fs->get_file(
+            $record['contextid'],
+            $record['component'],
+            $record['filearea'],
+            $record['itemid'],
+            $record['filepath'],
+            $record['filename']
+        );
         if (!$docx) {
             $docx = $fs->create_file_from_pathname($record, dirname(__DIR__) . '/tests/fixtures/source.docx');
         }

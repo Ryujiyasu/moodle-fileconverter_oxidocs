@@ -25,20 +25,27 @@
 defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig) {
-    $settings->add(new admin_setting_configexecutable('fileconverter_oxidocs/pathtooxidocs',
+    $settings->add(new admin_setting_configexecutable(
+        'fileconverter_oxidocs/pathtooxidocs',
         new lang_string('pathtooxidocs', 'fileconverter_oxidocs'),
         new lang_string('pathtooxidocs_help', 'fileconverter_oxidocs'),
-        '/usr/local/bin/oxidocs'));
+        '/usr/local/bin/oxidocs'
+    ));
 
-    $settings->add(new admin_setting_configcheckbox('fileconverter_oxidocs/strict',
+    $settings->add(new admin_setting_configcheckbox(
+        'fileconverter_oxidocs/strict',
         new lang_string('strict', 'fileconverter_oxidocs'),
         new lang_string('strict_help', 'fileconverter_oxidocs'),
-        1));
+        1
+    ));
 
-    $settings->add(new admin_setting_configduration('fileconverter_oxidocs/timeout',
+    $settings->add(new admin_setting_configduration(
+        'fileconverter_oxidocs/timeout',
         new lang_string('timeout', 'fileconverter_oxidocs'),
         new lang_string('timeout_help', 'fileconverter_oxidocs'),
-        60, 1));
+        60,
+        1
+    ));
 
     $url = new moodle_url('/files/converter/oxidocs/testoxidocs.php');
     $link = html_writer::link($url, get_string('test_oxidocs', 'fileconverter_oxidocs'));

@@ -45,8 +45,10 @@ if ($sendpdf) {
 $result = \fileconverter_oxidocs\converter::test_oxidocs_path();
 if ($result->status === \fileconverter_oxidocs\converter::PATH_OK) {
     $msg = $OUTPUT->notification(get_string('test_oxidocsok', 'fileconverter_oxidocs', s($result->message)), 'success');
-    $msg .= html_writer::link(new moodle_url($PAGE->url, ['sendpdf' => 1, 'sesskey' => sesskey()]),
-        get_string('test_oxidocsdownload', 'fileconverter_oxidocs'));
+    $msg .= html_writer::link(
+        new moodle_url($PAGE->url, ['sendpdf' => 1, 'sesskey' => sesskey()]),
+        get_string('test_oxidocsdownload', 'fileconverter_oxidocs')
+    );
 } else if ($result->status === \fileconverter_oxidocs\converter::PATH_ERROR) {
     $msg = $OUTPUT->notification(get_string('test_oxidocserror', 'fileconverter_oxidocs', s($result->message)), 'warning');
 } else {
