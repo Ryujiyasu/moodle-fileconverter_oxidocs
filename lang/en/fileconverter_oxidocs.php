@@ -25,8 +25,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['pathtooxidocs'] = 'Path to oxidocs';
-$string['pathtooxidocs_help'] = 'The oxidocs program, from https://github.com/Ryujiyasu/oxi/releases (static Linux builds need nothing else installed). It converts Word and PowerPoint files to PDF on this server, without LibreOffice or Microsoft Office, so that teachers can annotate submissions.';
-$string['pluginname'] = 'Oxi (Word and PowerPoint, no LibreOffice)';
+$string['pathtooxidocs_help'] = 'The oxidocs program, from https://github.com/Ryujiyasu/oxi/releases (static Linux builds need nothing else installed). It converts Word, PowerPoint and Excel files to PDF on this server, without LibreOffice or Microsoft Office, so that teachers can annotate submissions.';
+$string['pluginname'] = 'Oxi (Word, PowerPoint and Excel, no LibreOffice)';
 $string['privacy:metadata'] = 'The Oxi document converter converts files on the Moodle server and does not store or send any personal data.';
 $string['strict'] = 'Hand over what Oxi cannot fully draw';
 $string['strict_help'] = 'When a document holds content Oxi does not draw yet (some chart types, for example), report the conversion as failed instead of producing a PDF with that content missing. Moodle then tries the next enabled document converter, so place Oxi above it in Manage document converters.';

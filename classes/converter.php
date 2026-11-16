@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Convert Word and PowerPoint files to PDF with oxidocs.
+ * Convert Word, PowerPoint and Excel files to PDF with oxidocs.
  *
  * @package    fileconverter_oxidocs
  * @copyright  2026 Ryuji Yasukouchi
@@ -33,7 +33,7 @@ use core_files\conversion;
 /**
  * Document converter that runs the oxidocs program on the Moodle server.
  *
- * oxidocs lays a document out the way Word or PowerPoint does and writes the
+ * oxidocs lays a document out the way Word, PowerPoint or Excel does and writes the
  * PDF itself: there is no office suite to install and nothing leaves the
  * server. With the strict setting on, a document holding content oxidocs does
  * not draw is reported as failed rather than converted with that content

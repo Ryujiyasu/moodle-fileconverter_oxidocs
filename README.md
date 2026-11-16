@@ -1,6 +1,6 @@
 # Oxi document converter for Moodle
 
-A document converter (`fileconverter_oxidocs`) that turns Word and PowerPoint submissions into PDF **on your Moodle server**, so teachers can annotate them with *Annotate PDF*. It runs [oxidocs](https://github.com/Ryujiyasu/oxi), a single program that lays documents out the way Word and PowerPoint do. There is no LibreOffice to install, and no file is sent to Google or anyone else.
+A document converter (`fileconverter_oxidocs`) that turns Word, PowerPoint and Excel submissions into PDF **on your Moodle server**, so teachers can annotate them with *Annotate PDF*. It runs [oxidocs](https://github.com/Ryujiyasu/oxi), a single program that lays documents out the way Word, PowerPoint and Excel do. There is no LibreOffice to install, and no file is sent to Google or anyone else.
 
 Why: Moodle's own converters are [unoconv](https://docs.moodle.org/en/unoconv), which Moodle documents as deprecated (its successor unoserver is not supported, MDL-75066), and Google Drive, which uploads every submission to Google. Without a converter, teachers can only annotate submissions that are already PDF.
 
@@ -29,6 +29,8 @@ The plugin asks the oxidocs it is pointed at which of these it converts, so upda
 
    For ARM servers use `oxidocs-aarch64-unknown-linux-musl.tar.gz` (SHA-256 `cc5e9cdaccadd490baab3dd4a522c6ba3d06ff256535af190384ed32ebe49c4c`). `pip install oxidocs` also installs the program.
 
+   oxidocs carries the fonts it needs for Latin and Japanese text. For other characters (Greek letters such as π, for example) it uses the fonts installed on the server, so on a server with no fonts at all install a general one, such as `fonts-dejavu-core` on Debian and Ubuntu.
+
 2. **The plugin.** Copy this repository to `files/converter/oxidocs` in your Moodle code (`public/files/converter/oxidocs` on Moodle 5.1 and later), then visit *Site administration > Notifications*.
 
 3. **Enable it.** *Site administration > Plugins > Document converters > Manage document converters*: enable **Oxi** and move it to the top.
@@ -51,6 +53,6 @@ This plugin is GPL-3.0-or-later, like Moodle. oxidocs is a separate program, MPL
 
 ## Tested
 
-Moodle 4.5.16 with PHP 8.3 and PostgreSQL 16, oxidocs `0.9.0-static.5`: a Word document, a three-slide deck and a two-sheet workbook converted through Moodle's own conversion API (`\core_files\converter`), and a deck with a gradient handed over under the strict setting. CI runs Moodle's plugin checks and the PHPUnit tests on Moodle 4.1, 4.5 and 5.0.
+Moodle 4.5.16 with PHP 8.3 and PostgreSQL 16, oxidocs `0.9.0-static.5`: a Word document, a three-slide deck and a two-sheet workbook converted through Moodle's own conversion API (`\core_files\converter`), and a deck with a gradient handed over under the strict setting. A Word submission converted and opened in the assignment grader for annotation. CI runs Moodle's plugin checks and the PHPUnit tests on Moodle 4.1, 4.5, 5.0, 5.1 and 5.3.
 
 Developed with AI assistance (Claude); reviewed by the maintainer.
