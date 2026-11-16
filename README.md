@@ -10,8 +10,9 @@ Why: Moodle's own converters are [unoconv](https://docs.moodle.org/en/unoconv), 
 |---|---|
 | `.docx`, `.docm`, `.dotx`, `.dotm` | PDF |
 | `.pptx`, `.pptm`, `.ppsx`, `.ppsm`, `.potx`, `.potm` (oxidocs builds from `oxidocs-v0.9.0-static.4` on) | PDF, one page per slide |
+| `.xlsx`, `.xlsm`, `.xltx`, `.xltm` (oxidocs builds that have `xlsx-to-pdf`) | PDF |
 
-Everything else (`.doc`, `.odt`, `.xlsx`, …) is left to your other converters.
+The plugin asks the oxidocs it is pointed at which of these it converts, so updating oxidocs is enough to add a format. Everything else (`.doc`, `.odt`, …) is left to your other converters.
 
 **Hand-over instead of a broken PDF.** With *Hand over what Oxi cannot fully draw* on (the default), a document that holds content oxidocs does not draw yet (some chart types, slide gradients, for example) is reported as failed rather than converted with that content missing, and Moodle tries the next enabled converter. Put Oxi first in the list and keep another converter below it if you have one.
 

@@ -66,6 +66,16 @@ class converter implements \core_files\converter_interface {
     /** PowerPoint formats, converted with `pptx-to-pdf` by oxidocs builds that have it. */
     const SLIDE_FORMATS = ['pptx', 'pptm', 'ppsx', 'ppsm', 'potx', 'potm'];
 
+    /** Excel formats, converted with `xlsx-to-pdf` by oxidocs builds that have it. */
+    const SHEET_FORMATS = ['xlsx', 'xlsm', 'xltx', 'xltm'];
+
+    /** The command for each group of formats, in the order they are offered. */
+    const COMMANDS = [
+        'docx-to-pdf' => self::WORD_FORMATS,
+        'pptx-to-pdf' => self::SLIDE_FORMATS,
+        'xlsx-to-pdf' => self::SHEET_FORMATS,
+    ];
+
     /** @var bool|null Whether the requirements are met, once checked. */
     protected static $requirementsmet = null;
 
@@ -111,7 +121,7 @@ class converter implements \core_files\converter_interface {
             return $this;
         }
 
-        $command = in_array($from, self::SLIDE_FORMATS) ? 'pptx-to-pdf' : 'docx-to-pdf';
+        $command = self::command_for($from);
         $args = [self::get_path(), $command, '--quiet'];
         if (get_config('fileconverter_oxidocs', 'strict') !== '0') {
             $args[] = '--strict';
@@ -290,19 +300,50 @@ class converter implements \core_files\converter_interface {
     }
 
     /**
-     * Source formats this oxidocs converts: Word always, PowerPoint when the build has `pptx-to-pdf`.
+     * Source formats this oxidocs converts.
+     *
+     * Each group of formats is offered when the build has its command: the
+     * usage text oxidocs prints lists them. Word is in every build; PowerPoint
+     * and Excel arrived later, so an older build keeps working and simply
+     * declines them, leaving them to the next converter.
      *
      * @return string[]
      */
     protected static function source_formats(): array {
         if (self::$sourceformats === null) {
-            // The usage text lists the commands the build has.
             [, $usage] = self::capture([self::get_path()]);
-            self::$sourceformats = strpos($usage, 'pptx-to-pdf') !== false
-                ? array_merge(self::WORD_FORMATS, self::SLIDE_FORMATS)
-                : self::WORD_FORMATS;
+            $formats = [];
+            foreach (self::COMMANDS as $command => $group) {
+                if ($command === 'docx-to-pdf' || strpos($usage, $command) !== false) {
+                    $formats = array_merge($formats, $group);
+                }
+            }
+            self::$sourceformats = $formats;
         }
         return self::$sourceformats;
+    }
+
+    /**
+     * The oxidocs command that converts files of this type.
+     *
+     * @param string $from Source file extension, lower case.
+     * @return string
+     */
+    protected static function command_for(string $from): string {
+        foreach (self::COMMANDS as $command => $group) {
+            if (in_array($from, $group)) {
+                return $command;
+            }
+        }
+        return 'docx-to-pdf';
+    }
+
+    /**
+     * Forget what was learnt about the configured oxidocs, after the setting changes.
+     */
+    public static function reset_caches(): void {
+        self::$requirementsmet = null;
+        self::$sourceformats = null;
     }
 
     /**

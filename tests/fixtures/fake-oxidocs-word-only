@@ -1,0 +1,8 @@
+#!/bin/sh
+# Stand-in for an oxidocs build that has only docx-to-pdf.
+case "$1" in
+  "") echo "Usage:"; echo "  oxi docx-to-pdf"; exit 0 ;;
+  --version) echo "oxidocs 0.0.0-test"; exit 0 ;;
+esac
+for last; do :; done
+printf '%%PDF-1.4\n%% %s\n' "$1" > "$last"

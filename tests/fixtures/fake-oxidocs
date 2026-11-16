@@ -1,0 +1,10 @@
+#!/bin/sh
+# Stand-in for oxidocs in the tests: answers like a build with every command,
+# and writes the command it was asked for into the output, so a test can see
+# which command a format was routed to.
+case "$1" in
+  "") echo "Usage:"; echo "  oxi docx-to-pdf"; echo "  oxi pptx-to-pdf"; echo "  oxi xlsx-to-pdf"; exit 0 ;;
+  --version) echo "oxidocs 0.0.0-test"; exit 0 ;;
+esac
+for last; do :; done
+printf '%%PDF-1.4\n%% %s\n' "$1" > "$last"

@@ -38,6 +38,7 @@ final class converter_test extends \advanced_testcase {
         $this->resetAfterTest();
         $path = getenv('OXIDOCS_PATH') ?: converter::DEFAULT_PATH;
         set_config('pathtooxidocs', $path, 'fileconverter_oxidocs');
+        converter::reset_caches();
         if (!is_executable($path)) {
             $this->markTestSkipped("oxidocs not found at {$path}");
         }
@@ -69,7 +70,6 @@ final class converter_test extends \advanced_testcase {
         $this->assertTrue(converter::supports('docx', 'pdf'));
         $this->assertTrue(converter::supports('DOCX', 'PDF'));
         $this->assertFalse(converter::supports('docx', 'png'));
-        $this->assertFalse(converter::supports('xlsx', 'pdf'));
         $this->assertFalse(converter::supports('odt', 'pdf'));
     }
 
@@ -86,6 +86,27 @@ final class converter_test extends \advanced_testcase {
 
     public function test_an_unreadable_file_fails(): void {
         $conversion = $this->convert('broken.docx');
+        // The failure is reported through debugging(); older Moodle test runs flag that unless cleared.
+        $this->resetDebugging();
         $this->assertSame(conversion::STATUS_FAILED, $conversion->get('status'));
+    }
+
+    public function test_each_format_goes_to_its_command_when_the_build_has_it(): void {
+        // A stand-in that advertises all three commands and writes the one it was given into the PDF.
+        set_config('pathtooxidocs', __DIR__ . '/fixtures/fake-oxidocs', 'fileconverter_oxidocs');
+        converter::reset_caches();
+        $this->assertTrue(converter::supports('xlsx', 'pdf'));
+        $this->assertTrue(converter::supports('pptx', 'pdf'));
+        $this->assertStringContainsString('docx-to-pdf', $this->convert('source.docx')->get_destfile()->get_content());
+        $this->assertStringContainsString('xlsx-to-pdf', $this->convert('sheet.xlsx')->get_destfile()->get_content());
+    }
+
+    public function test_formats_the_build_lacks_are_declined(): void {
+        // The stand-in in Word-only mode, as builds before PowerPoint and Excel support answer.
+        set_config('pathtooxidocs', __DIR__ . '/fixtures/fake-oxidocs-word-only', 'fileconverter_oxidocs');
+        converter::reset_caches();
+        $this->assertTrue(converter::supports('docx', 'pdf'));
+        $this->assertFalse(converter::supports('pptx', 'pdf'));
+        $this->assertFalse(converter::supports('xlsx', 'pdf'));
     }
 }
