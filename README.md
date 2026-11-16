@@ -10,7 +10,7 @@ Why: Moodle's own converters are [unoconv](https://docs.moodle.org/en/unoconv), 
 |---|---|
 | `.docx`, `.docm`, `.dotx`, `.dotm` | PDF |
 | `.pptx`, `.pptm`, `.ppsx`, `.ppsm`, `.potx`, `.potm` (oxidocs builds from `oxidocs-v0.9.0-static.4` on) | PDF, one page per slide |
-| `.xlsx`, `.xlsm`, `.xltx`, `.xltm` (oxidocs builds that have `xlsx-to-pdf`) | PDF |
+| `.xlsx`, `.xlsm`, `.xltx`, `.xltm` (oxidocs builds from `oxidocs-v0.9.0-static.5` on) | PDF, the sheets' print pages |
 
 The plugin asks the oxidocs it is pointed at which of these it converts, so updating oxidocs is enough to add a format. Everything else (`.doc`, `.odt`, …) is left to your other converters.
 
@@ -21,13 +21,13 @@ The plugin asks the oxidocs it is pointed at which of these it converts, so upda
 1. **oxidocs.** Download the static Linux build (it needs nothing else on the server) and put it on the path the plugin expects:
 
    ```sh
-   curl -LO https://github.com/Ryujiyasu/oxi/releases/download/oxidocs-v0.9.0-static.4/oxidocs-x86_64-unknown-linux-musl.tar.gz
-   echo "9a32382e13f92b34bc87419d7ad616107bb47fa159890cd51de702d4dd6c437b  oxidocs-x86_64-unknown-linux-musl.tar.gz" | sha256sum -c -
+   curl -LO https://github.com/Ryujiyasu/oxi/releases/download/oxidocs-v0.9.0-static.5/oxidocs-x86_64-unknown-linux-musl.tar.gz
+   echo "6c9cbdb012f1b577e6d98a74f1475305a468e210b19c311a38d5c6316c7eb967  oxidocs-x86_64-unknown-linux-musl.tar.gz" | sha256sum -c -
    tar -xzf oxidocs-x86_64-unknown-linux-musl.tar.gz
    sudo install -m 755 oxidocs-x86_64-unknown-linux-musl/oxidocs /usr/local/bin/oxidocs
    ```
 
-   For ARM servers use `oxidocs-aarch64-unknown-linux-musl.tar.gz` (SHA-256 `fc439d61cf0de0e9ad1f802055521693565683aeb608286f96307765f5bf0363`). `pip install oxidocs` also installs the program.
+   For ARM servers use `oxidocs-aarch64-unknown-linux-musl.tar.gz` (SHA-256 `cc5e9cdaccadd490baab3dd4a522c6ba3d06ff256535af190384ed32ebe49c4c`). `pip install oxidocs` also installs the program.
 
 2. **The plugin.** Copy this repository to `files/converter/oxidocs` in your Moodle code (`public/files/converter/oxidocs` on Moodle 5.1 and later), then visit *Site administration > Notifications*.
 
@@ -51,6 +51,6 @@ This plugin is GPL-3.0-or-later, like Moodle. oxidocs is a separate program, MPL
 
 ## Tested
 
-Moodle 4.5.16 with PHP 8.3 and PostgreSQL 16, oxidocs `0.9.0-static.4`: a Word document and a three-slide deck converted through Moodle's own conversion API (`\core_files\converter`), a deck with a gradient handed over under the strict setting, and a spreadsheet declined. CI runs Moodle's plugin checks and the PHPUnit tests on Moodle 4.1, 4.5 and 5.0.
+Moodle 4.5.16 with PHP 8.3 and PostgreSQL 16, oxidocs `0.9.0-static.5`: a Word document, a three-slide deck and a two-sheet workbook converted through Moodle's own conversion API (`\core_files\converter`), and a deck with a gradient handed over under the strict setting. CI runs Moodle's plugin checks and the PHPUnit tests on Moodle 4.1, 4.5 and 5.0.
 
 Developed with AI assistance (Claude); reviewed by the maintainer.

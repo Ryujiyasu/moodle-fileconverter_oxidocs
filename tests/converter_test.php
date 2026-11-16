@@ -79,6 +79,15 @@ final class converter_test extends \advanced_testcase {
         $this->assertStringStartsWith('%PDF-', $conversion->get_destfile()->get_content());
     }
 
+    public function test_converts_a_workbook_when_the_build_has_xlsx_to_pdf(): void {
+        if (!converter::supports('xlsx', 'pdf')) {
+            $this->markTestSkipped('this oxidocs build has no xlsx-to-pdf');
+        }
+        $conversion = $this->convert('source.xlsx');
+        $this->assertSame(conversion::STATUS_COMPLETE, $conversion->get('status'));
+        $this->assertStringStartsWith('%PDF-', $conversion->get_destfile()->get_content());
+    }
+
     public function test_a_missing_program_fails_instead_of_converting(): void {
         set_config('pathtooxidocs', '/nonexistent/oxidocs', 'fileconverter_oxidocs');
         $this->assertSame(converter::PATH_DOESNOTEXIST, converter::test_oxidocs_path()->status);

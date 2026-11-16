@@ -34,8 +34,8 @@ jobs:
           coverage: none
       - name: Install oxidocs
         run: |
-          curl -fsSLo oxidocs.tar.gz https://github.com/Ryujiyasu/oxi/releases/download/oxidocs-v0.9.0-static.4/oxidocs-x86_64-unknown-linux-musl.tar.gz
-          echo "9a32382e13f92b34bc87419d7ad616107bb47fa159890cd51de702d4dd6c437b  oxidocs.tar.gz" | sha256sum -c -
+          curl -fsSLo oxidocs.tar.gz https://github.com/Ryujiyasu/oxi/releases/download/oxidocs-v0.9.0-static.5/oxidocs-x86_64-unknown-linux-musl.tar.gz
+          echo "6c9cbdb012f1b577e6d98a74f1475305a468e210b19c311a38d5c6316c7eb967  oxidocs.tar.gz" | sha256sum -c -
           tar -xzf oxidocs.tar.gz
           sudo install -m 755 oxidocs-x86_64-unknown-linux-musl/oxidocs /usr/local/bin/oxidocs
           oxidocs --version
