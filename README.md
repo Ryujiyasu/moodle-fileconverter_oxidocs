@@ -21,13 +21,13 @@ The plugin asks the oxidocs it is pointed at which of these it converts, so upda
 1. **oxidocs.** Download the static Linux build (it needs nothing else on the server) and put it on the path the plugin expects:
 
    ```sh
-   curl -LO https://github.com/Ryujiyasu/oxi/releases/download/oxidocs-v0.9.0-static.5/oxidocs-x86_64-unknown-linux-musl.tar.gz
-   echo "6c9cbdb012f1b577e6d98a74f1475305a468e210b19c311a38d5c6316c7eb967  oxidocs-x86_64-unknown-linux-musl.tar.gz" | sha256sum -c -
+   curl -LO https://github.com/Ryujiyasu/oxi/releases/download/oxidocs-v0.9.0-static.7/oxidocs-x86_64-unknown-linux-musl.tar.gz
+   echo "59f537d81108336dad089eeabc5d15214ba76d0eaa888fdf004764e98640b042  oxidocs-x86_64-unknown-linux-musl.tar.gz" | sha256sum -c -
    tar -xzf oxidocs-x86_64-unknown-linux-musl.tar.gz
    sudo install -m 755 oxidocs-x86_64-unknown-linux-musl/oxidocs /usr/local/bin/oxidocs
    ```
 
-   For ARM servers use `oxidocs-aarch64-unknown-linux-musl.tar.gz` (SHA-256 `cc5e9cdaccadd490baab3dd4a522c6ba3d06ff256535af190384ed32ebe49c4c`). `pip install oxidocs` also installs the program.
+   For ARM servers use `oxidocs-aarch64-unknown-linux-musl.tar.gz` (SHA-256 `fbd266d9624b34c516b7ef70cd7b59570eb089925ed039fb5103887775016c15`). `pip install oxidocs` also installs the program.
 
    oxidocs carries the fonts it needs for Latin and Japanese text. For other characters (Greek letters such as π, for example) it uses the fonts installed on the server, so on a server with no fonts at all install a general one, such as `fonts-dejavu-core` on Debian and Ubuntu.
 

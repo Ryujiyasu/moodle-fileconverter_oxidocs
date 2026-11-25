@@ -25,8 +25,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'fileconverter_oxidocs';
-$plugin->version   = 2026111601;
+$plugin->version   = 2026112500;
 $plugin->requires  = 2022112800; // Moodle 4.1.
 $plugin->supported = [401, 503];
 $plugin->maturity  = MATURITY_BETA;
-$plugin->release   = '0.1.0';
+$plugin->release   = '0.1.1';
